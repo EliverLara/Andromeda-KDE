@@ -9,13 +9,12 @@ TextField {
     font.pointSize: config.fontSize
     font.family: config.font
     background: Rectangle {
-        color: "#252a3f"
-        opacity: 0.7
-        radius: parent.width / 2
+        color: "#fff"
+        opacity: 0.1
+        radius: 8
         width: parent.width
-        height: width / 9
-        border.width: 1
-        border.color: "#121517"
+        height: parent.height
+    
         anchors.centerIn: parent
     }
 }

@@ -7,7 +7,7 @@ import QtQuick.Controls 1.3 as QQC
 
 QQCS.MenuStyle {
     frame: Rectangle {
-        color: "#1E2326"
+        color: "#1E282C"
         border.color: "#0C0E15"
         border.width: 1
     }

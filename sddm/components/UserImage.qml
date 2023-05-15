@@ -3,35 +3,27 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
 Item {
-    id: imageSource
+    id: userImage
     property string avatarPath
     property string iconSource
-    property real faceSize: Math.min(width, height - units.smallSpacing)
-
     
-    
-    // width: width
-    // height: height    
-    
-    
-    // Item {s
-    //     id: imageSource
-
-        width: wrapper.width 
-        height: width
-
+    Item {
+        id: imageSource
+       
+        anchors.fill: parent
+       
         //Image takes priority, taking a full path to a file, if that doesn't exist we show an icon
         Image {
             id: face
-            source: wrapper.avatarPath
-            sourceSize: Qt.size(faceSize, faceSize)
+            source: userImage.avatarPath
+            sourceSize: Qt.size(width, width)
             fillMode: Image.PreserveAspectCrop
             anchors.fill: parent
         }
 
         PlasmaCore.IconItem {
             id: faceIcon
-            source: iconSource
+            source: userImage.iconSource
             visible: (face.status == Image.Error || face.status == Image.Null)
             anchors.fill: parent
             anchors.margins: units.gridUnit * 0.5 // because mockup says so...
@@ -39,22 +31,20 @@ Item {
         }
     
 
+    }
     ShaderEffect {
-        anchors {
-            verticalCenter: parent.verticalCenter
-            // bottomMargin: units.largeSpacing
-            horizontalCenter: parent.horizontalCenter
-        }
-
-        width: wrapper.width
-        height: wrapper.height
+        
+        anchors.centerIn: parent
+        
+        width: imageSource.width
+        height: imageSource.height
 
         supportsAtlasTextures: true
 
         property var source: ShaderEffectSource {
             sourceItem: imageSource
             // software rendering is just a fallback so we can accept not having a rounded avatar here
-            hideSource: wrapper.GraphicsInfo.api !== GraphicsInfo.Software
+            hideSource: userImage.GraphicsInfo.api !== GraphicsInfo.Software
             live: true // otherwise the user in focus will show a blurred avatar
         }
 

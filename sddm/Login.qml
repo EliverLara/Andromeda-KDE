@@ -82,76 +82,61 @@ Item {
         loginRequest(username, password);
     }
 
+    // Gets the system time to determinate the correct greeting
+    property int hours
 
+    PlasmaCore.DataSource {
+        id: timeSource
+        engine: "time"
+        connectedSources: ["Local"]
+        interval: 1000
+        onDataChanged: {
+            var date = new Date(data["Local"]["DateTime"]);
+            hours = date.getHours();
+            // minutes = date.getMinutes();
+            // seconds = date.getSeconds();
+        }
+        Component.onCompleted: {
+            onDataChanged();
+        }
+    }
 
     //goal is to show the prompts, in ~16 grid units high, then the action buttons
     //but collapse the space between the prompts and actions if there's no room
     //ui is constrained to 16 grid units wide, or the screen
              
-    Rectangle {
-        anchors.fill: prompts
-        color: "#0f0"
-        opacity: 0.5
-    }
-
-
     RowLayout {
         id: prompts
         
-        // anchors.verticalCenter: parent.verticalCenter
-        // anchors.topMargin: units.gridUnit * 0.5
-        // anchors.left: parent.left
-        // anchors.right: parent.right
-        // anchors.bottom: parent.bottom
-        
         anchors.fill: parent
         
+        // Avatar image and user list column
         Item {
-
             id: userListColumn
             
-            Layout.fillHeight: true
-            
+            Layout.fillHeight: true  
             Layout.fillWidth: true
             
-            // Layout.minimumHeight: implicitHeight
-            // Layout.maximumWidth: units.gridUnit * 16
-
-            Rectangle {
-                anchors.fill: parent
-                color: "#ff0"
-                opacity: 0.5
-            }
-
-            Rectangle {
-                width: parent.width - 10
-                height: userListView.height
-                color: "#f00"
-                opacity: 0.5
-                radius: 10
-                
-                anchors.centerIn: userListView
-            }
-
-            Rectangle {
+            UserImage {
                 id: userImage
+                avatarPath: userListCurrentModelData.icon || ""
+                iconSource: userListCurrentModelData.iconName || "user-identity"
+                anchors.centerIn: parent
+                anchors.verticalCenterOffset: -(userListView.height / 2)
                 width: 150
                 height: width
+            }
+
+            // Semi-transparent border aroud user image
+            Rectangle {
+                id: userImageBorder
+                anchors.fill: userImage
+                
                 radius: width / 2
                 color: "#fff"
+                opacity: 0.2
                 clip: true
-                //avatarPath: userListCurrentModelData.icon || ""
-        //iconSource: userListCurrentModelData.iconName || "user-identity"
-                //Image takes priority, taking a full path to a file, if that doesn't exist we show an icon
-                Image {
-                    id: face
-                    source: userListCurrentModelData.icon || ""
-                  //  sourceSize: Qt.size(faceSize, faceSize)
-                    fillMode: Image.PreserveAspectCrop
-                    anchors.fill: parent
-                }
-               anchors.centerIn: parent
-               
+                z: -1
             }
 
             UserList {
@@ -164,37 +149,66 @@ Item {
                     margins: height / 2
                 }
             }
-       
             
         }
 
 
-
+        // Greeting, password and username prompts column
         ColumnLayout {
-            Layout.minimumHeight: implicitHeight
-            Layout.maximumHeight: units.gridUnit * 10
-            Layout.maximumWidth: units.gridUnit * 16
+            Layout.maximumWidth: parent.width / 2
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            ColumnLayout {
-                id: innerLayout
-                Layout.alignment: Qt.AlignHCenter
+            spacing: 15
+
+            // Greeting Label
+            Label {
+                id: greetingLabel
+                text: hours < 12 ? "Good Morning" : hours < 18 ? "Good afternoon" : "Good evening"
+                color: "#fff"
+                style: softwareRendering ? Text.Outline : Text.Normal
+                styleColor: softwareRendering ? ColorScope.backgroundColor : "transparent" //no outline, doesn't matter
+                font.pointSize:24 
+                Layout.alignment: Qt.AlignLeft
+                font.family: config.font
+                font.bold: true
+            }
+            // Display username below the greeting label to correctly manage the label size in case that User-Name isn't available
+            Label {
+                id: userNameLabel
                 Layout.fillWidth: true
+                Layout.topMargin: -20
+                text: userListCurrentModelData.realName || userListCurrentModelData.name
+                color: "#fff"
+                style: softwareRendering ? Text.Outline : Text.Normal
+                styleColor: softwareRendering ? ColorScope.backgroundColor : "transparent" //no outline, doesn't matter
+                font.pointSize: userListCurrentModelData.realName ? 24 : 14
+                Layout.alignment: Qt.AlignLeft
+                font.family: config.font
+                font.bold: true
+                wrapMode: Text.WordWrap
+            }
 
-                    Input {
-                    id: userNameInput
-                    Layout.fillWidth: true
-                    text: lastUserName
-                    visible: showUsernamePrompt
-                    focus: showUsernamePrompt && !lastUserName //if there's a username prompt it gets focus first, otherwise password does
-                    Layout.topMargin: 10
-                    Layout.bottomMargin: 10
-                    placeholderText: i18nd("plasma_lookandfeel_org.kde.lookandfeel", "Username")
+            // User name input in case user is not included in user-list
+            Input {
+                id: userNameInput
+                Layout.fillWidth: true
+                Layout.preferredHeight: 40
+                text: lastUserName
+                visible: showUsernamePrompt
+                focus: showUsernamePrompt && !lastUserName //if there's a username prompt it gets focus first, otherwise password does
+                Layout.topMargin: 20
+                placeholderText: i18nd("plasma_lookandfeel_org.kde.lookandfeel", "Username")
 
-                    onAccepted:
-                        if (root.loginScreenUiVisible) {
-                            passwordBox.forceActiveFocus()
-                        }
-                }
+                onAccepted:
+                    if (root.loginScreenUiVisible) {
+                        passwordBox.forceActiveFocus()
+                    }
+            }
+
+            // Passwrod and login button row
+            RowLayout {
+                
+                Layout.fillWidth: true
+                Layout.topMargin: 20
 
                 Input {
                     id: passwordBox
@@ -203,6 +217,7 @@ Item {
                     echoMode: TextInput.Password
 
                     Layout.fillWidth: true
+                    Layout.preferredHeight: 40
 
                     onAccepted: {
                         if (root.loginScreenUiVisible) {
@@ -235,46 +250,36 @@ Item {
                         }
                     }
                 }
+
                 Button {
                     id: loginButton
-                    text: userListCurrentModelData.realName || userListCurrentModelData.name
                     enabled: passwordBox.text != ""
 
-                    Layout.topMargin: 20
-                    Layout.fillWidth: true
-                    
+                    Layout.preferredHeight: passwordBox.height
+                    Layout.preferredWidth: text.length === 0 ? loginButton.Layout.preferredHeight : -1
+                    Accessible.name: i18nd("plasma_lookandfeel_org.kde.lookandfeel", "Log In")
+
                     font.pointSize: config.fontSize
                     font.family: config.font
-                        opacity: enabled ? 1.0 : 0.7
 
-                    contentItem: Text {
-                        text: loginButton.text
-                        font: loginButton.font
-                        color: "#ffffff"
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                        elide: Text.ElideRight
-                    }
+                    icon.name: text.length === 0 ? (root.LayoutMirroring.enabled ? "go-previous" : "go-next") : ""
+                    icon.color: enabled ? "#fff" : "#666666"
 
+                    text: root.showUsernamePrompt || userList.currentItem.needsPassword ? "" : i18n("Log In")
                     background: Rectangle {
                         id: buttonBackground
-                        height: parent.width
-                        width: height / 9
-                        radius: width / 2
-                            rotation: -90
-                            anchors.centerIn: parent
-
-                        gradient: Gradient {
-                            GradientStop { position: 0.0; color: "#F9D423" }
-                            GradientStop { position: 0.33; color: "#FF4E50" }
-                            GradientStop { position: 1.0; color: "#8A2387" }
-                        }
+                        radius: 8
+                        anchors.fill: parent
+                        color: enabled ? "#fff" : "#ADADAD"
+                        opacity: 0.1
                     }
 
                     onClicked: startLogin();
                 }
+                
             }
 
+            // Notifications - login state label
             PlasmaComponents.Label {
                 id: notificationsLabel
                 Layout.maximumWidth: units.gridUnit * 16
@@ -284,24 +289,43 @@ Item {
                 wrapMode: Text.WordWrap
                 font.italic: true
             }
-            Item {
-                Layout.fillHeight: true
+
+            RowLayout {
+                id: footer
+
+                Layout.alignment: Qt.AlignHCenter
+
+                Behavior on opacity {
+                    OpacityAnimator {
+                        duration: units.longDuration
+                    }
+                }
+
+                PlasmaComponents.ToolButton {
+                    // text: i18ndc("plasma_lookandfeel_org.kde.lookandfeel", "Button to show/hide virtual keyboard", "Virtual Keyboard")
+                    iconName: inputPanel.keyboardActive ? "input-keyboard-virtual-on" : "input-keyboard-virtual-off"
+                    onClicked: inputPanel.showHide()
+                    visible: inputPanel.status == Loader.Ready
+                }
+
+                KeyboardButton {
+                }
+
+                SessionButton {
+                    id: sessionButton
+                }
             }
         }
 
-        Item {
-            Layout.fillHeight: true
-        }
     }
 
-
-
-        Row { //deliberately not rowlayout as I'm not trying to resize child items
-            id: actionItemsLayout
-            spacing: units.smallSpacing
-            Layout.alignment: Qt.AlignHCenter
-        }
-
-
+    Row { //deliberately not rowlayout as I'm not trying to resize child items
+        id: actionItemsLayout
+        spacing: units.smallSpacing
+            
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        //anchors.bottomMargin: height / 2
+    }
 
 }

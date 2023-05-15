@@ -31,7 +31,7 @@ Item {
 
     activeFocusOnTab: true
 
-    property int iconSize: units.gridUnit * 2.5
+    property int iconSize: units.gridUnit * 2
 
     implicitWidth: Math.max(iconSize + units.largeSpacing * 2, label.contentWidth)
     implicitHeight: iconSize + units.smallSpacing + label.implicitHeight

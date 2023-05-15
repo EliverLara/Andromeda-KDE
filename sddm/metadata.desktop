@@ -1,16 +1,16 @@
 [SddmGreeterTheme]
-Name=sweet
-Description=Sweet sddm theme
+Name=Andromeda
+Description=Andromeda sddm theme
 Author=Eliver Lara
-Copyright=(c) 2019, Eliver Lara
+Copyright=(c) 2023, Eliver Lara
 License=GPL 3+
 Type=sddm-theme
 Version=0.1
-Website=https://github.com/EliverLara/Sweet/tree/nova/kde/sddm
+Website=https://github.com/EliverLara/Andromeda-kde/
 Screenshot=preview.png
 MainScript=Main.qml
 ConfigFile=theme.conf
 TranslationsDirectory=translations
 Email=eliverlara@gmail.com
-Theme-Id=sweet
+Theme-Id=andromeda
 Theme-API=2.0

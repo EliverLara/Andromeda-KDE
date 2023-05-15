@@ -60,118 +60,19 @@ Item {
         color: "#0C0E15"
     }
     
-    // Rectangle {
-    //     anchors.centerIn: imageSource
-    //     width: imageSource.width + 10 // Subtract to prevent fringing
-    //     height: width
-    //     radius: width / 2
-
-    //     gradient: Gradient {
-    //         GradientStop { position: 0.0; color: "#FEAC5E" }
-    //         GradientStop { position: 0.33; color: "#C779D0" }
-    //         GradientStop { position: 1.0; color: "#4BC0C8" }
-    //     }
-
-    //     z:-1
-    //     rotation: 270
-    //     transformOrigin: Item.Center
-    // }
-
-    Item {
+    UserImage {
         id: imageSource
-        // anchors {
-        //     verticalCenter: parent.verticalCenter
-        //     // bottomMargin: units.largeSpacing
-        //     horizontalCenter: parent.horizontalCenter
-        // }
-        Behavior on width { 
-            PropertyAnimation {
-                from: faceSize
-                duration: units.longDuration * 2;
-            }
-        }
-        width: faceSize 
-        height: width
-
-        //Image takes priority, taking a full path to a file, if that doesn't exist we show an icon
-        Image {
-            id: face
-            source: wrapper.avatarPath
-            sourceSize: Qt.size(faceSize, faceSize)
-            fillMode: Image.PreserveAspectCrop
-            anchors.fill: parent
-        }
-
-        PlasmaCore.IconItem {
-            id: faceIcon
-            source: iconSource
-            visible: (face.status == Image.Error || face.status == Image.Null)
-            anchors.fill: parent
-            anchors.margins: units.gridUnit * 0.5 // because mockup says so...
-            colorGroup: PlasmaCore.ColorScope.colorGroup
-        }
-    }
-
-    ShaderEffect {
         anchors {
             verticalCenter: parent.verticalCenter
-            // bottomMargin: units.largeSpacing
             horizontalCenter: parent.horizontalCenter
         }
 
-        width: imageSource.width
-        height: imageSource.height
+        width: faceSize 
+        height: width
 
-        supportsAtlasTextures: true
+        avatarPath: wrapper.avatarPath
+        iconSource: wrapper.iconSource
 
-        property var source: ShaderEffectSource {
-            sourceItem: imageSource
-            // software rendering is just a fallback so we can accept not having a rounded avatar here
-            hideSource: wrapper.GraphicsInfo.api !== GraphicsInfo.Software
-            live: true // otherwise the user in focus will show a blurred avatar
-        }
-
-        property var colorBorder: "#00000000"
-
-        //draw a circle with an antialised border
-        //innerRadius = size of the inner circle with contents
-        //outerRadius = size of the border
-        //blend = area to blend between two colours
-        //all sizes are normalised so 0.5 == half the width of the texture
-
-        //if copying into another project don't forget to connect themeChanged to update()
-        //but in SDDM that's a bit pointless
-        fragmentShader: "
-                        varying highp vec2 qt_TexCoord0;
-                        uniform highp float qt_Opacity;
-                        uniform lowp sampler2D source;
-
-                        uniform lowp vec4 colorBorder;
-                        highp float blend = 0.01;
-                        highp float innerRadius = 0.47;
-                        highp float outerRadius = 0.49;
-                        lowp vec4 colorEmpty = vec4(0.0, 0.0, 0.0, 0.0);
-
-                        void main() {
-                            lowp vec4 colorSource = texture2D(source, qt_TexCoord0.st);
-
-                            highp vec2 m = qt_TexCoord0 - vec2(0.5, 0.5);
-                            highp float dist = sqrt(m.x * m.x + m.y * m.y);
-
-                            if (dist < innerRadius)
-                                gl_FragColor = colorSource;
-                            else if (dist < innerRadius + blend)
-                                gl_FragColor = mix(colorSource, colorBorder, ((dist - innerRadius) / blend));
-                            else if (dist < outerRadius)
-                                gl_FragColor = colorBorder;
-                            else if (dist < outerRadius + blend)
-                                gl_FragColor = mix(colorBorder, colorEmpty, ((dist - outerRadius) / blend));
-                            else
-                                gl_FragColor = colorEmpty ;
-
-                            gl_FragColor = gl_FragColor * qt_Opacity;
-                    }
-        "
     }
 
     PlasmaComponents.Label {

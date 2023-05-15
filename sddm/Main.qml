@@ -20,7 +20,7 @@
 import QtQuick 2.8
 
 import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.1
+import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.0
 
 import org.kde.plasma.core 2.0 as PlasmaCore
@@ -150,15 +150,14 @@ PlasmaCore.ColorScope {
                 }
 
                 notificationMessage: {
-                    var text = ""
+                    const parts = [];
                     if (keystateSource.data["Caps Lock"]["Locked"]) {
-                        text += i18nd("plasma_lookandfeel_org.kde.lookandfeel","Caps Lock is on")
-                        if (root.notificationMessage) {
-                            text += " • "
-                        }
+                        parts.push(i18nd("plasma_lookandfeel_org.kde.lookandfeel", "Caps Lock is on"));
                     }
-                    text = "vale verga la vida"
-                    return text
+                    if (root.notificationMessage) {
+                        parts.push(root.notificationMessage);
+                    }
+                    return parts.join(" • ");
                 }
 
                 actionItems: [
@@ -194,6 +193,39 @@ PlasmaCore.ColorScope {
                 onLoginRequest: {
                     root.notificationMessage = ""
                     sddm.login(username, password, sessionButton.currentIndex)
+                }
+            }
+
+            pushEnter: Transition {
+                PropertyAnimation {
+                    property: "opacity"
+                    from: 0
+                    to:1
+                    duration: 200
+                }
+            }
+            pushExit: Transition {
+                PropertyAnimation {
+                    property: "opacity"
+                    from: 1
+                    to:0
+                    duration: 200
+                }
+            }
+            popEnter: Transition {
+                PropertyAnimation {
+                    property: "opacity"
+                    from: 0
+                    to:1
+                    duration: 200
+                }
+            }
+            popExit: Transition {
+                PropertyAnimation {
+                    property: "opacity"
+                    from: 1
+                    to:0
+                    duration: 200
                 }
             }
 
@@ -373,14 +405,14 @@ PlasmaCore.ColorScope {
             }
         }
 
-        Rectangle {
-            id: formBg
-            anchors.fill: mainStack
-            anchors.centerIn: mainStack
-            color: "#161925"
-            opacity: 0.4
-            z:-1
-        }
+        // Rectangle {
+        //     id: formBg
+        //     anchors.fill: mainStack
+        //     anchors.centerIn: mainStack
+        //     color: "#161925"
+        //     opacity: 0.4
+        //     z:-1
+        // }
 
         ShaderEffectSource {
             id: blurArea
@@ -398,42 +430,12 @@ PlasmaCore.ColorScope {
             height: blurArea.height
             width: blurArea.width
             source: blurArea
-            radius: 50
+            radius: 75
             samples: 50 * 2 + 1
             cached: true
          //   anchors.centerIn: formBg
             visible: true
             z:-2
-        }
-
-        //Footer
-        RowLayout {
-            id: footer
-            anchors {
-                bottom: parent.bottom
-                left: parent.left
-                margins: units.smallSpacing
-            }
-
-            Behavior on opacity {
-                OpacityAnimator {
-                    duration: units.longDuration
-                }
-            }
-
-            PlasmaComponents.ToolButton {
-                text: i18ndc("plasma_lookandfeel_org.kde.lookandfeel", "Button to show/hide virtual keyboard", "Virtual Keyboard")
-                iconName: inputPanel.keyboardActive ? "input-keyboard-virtual-on" : "input-keyboard-virtual-off"
-                onClicked: inputPanel.showHide()
-                visible: inputPanel.status == Loader.Ready
-            }
-
-            KeyboardButton {
-            }
-
-            SessionButton {
-                id: sessionButton
-            }
         }
     }
 

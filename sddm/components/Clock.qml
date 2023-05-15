@@ -32,7 +32,7 @@ ColumnLayout {
         styleColor: softwareRendering ? ColorScope.backgroundColor : "transparent" //no outline, doesn't matter
         font.pointSize: 34
         Layout.alignment: Qt.AlignHCenter
-                font.family: config.font
+        font.family: config.font
 
     }
     Label {
@@ -42,7 +42,7 @@ ColumnLayout {
         styleColor: softwareRendering ? ColorScope.backgroundColor : "transparent" //no outline, doesn't matter
         font.pointSize: 17
         Layout.alignment: Qt.AlignHCenter
-                font.family: config.font
+        font.family: config.font
 
     }
     DataSource {

@@ -10,7 +10,8 @@ PlasmaComponents.ToolButton {
 
     property int currentIndex: -1
 
-    text: i18nd("plasma_lookandfeel_org.kde.lookandfeel", "Keyboard Layout: %1", instantiator.objectAt(currentIndex).shortName)
+    // text: i18nd("plasma_lookandfeel_org.kde.lookandfeel", "Keyboard Layout: %1", instantiator.objectAt(currentIndex).shortName)
+    iconName: "flag"
     implicitWidth: minimumWidth
     font.pointSize: config.fontSize
 
