@@ -192,7 +192,7 @@ PlasmaCore.ColorScope {
 
                 onLoginRequest: {
                     root.notificationMessage = ""
-                    sddm.login(username, password, sessionButton.currentIndex)
+                    sddm.login(username, password, sessionIndex)
                 }
             }
 
@@ -370,7 +370,7 @@ PlasmaCore.ColorScope {
 
                 onLoginRequest: {
                     root.notificationMessage = ""
-                    sddm.login(username, password, sessionButton.currentIndex)
+                    sddm.login(username, password, sessionIndex)
                 }
 
                 actionItems: [

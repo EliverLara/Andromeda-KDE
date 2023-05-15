@@ -59,7 +59,7 @@ Item {
     property int visibleBoundary: mapFromItem(loginButton, 0, 0).y
     onHeightChanged: visibleBoundary = mapFromItem(loginButton, 0, 0).y + loginButton.height + units.smallSpacing
 
-    signal loginRequest(string username, string password)
+    signal loginRequest(string username, string password, int sessionIndex)
 
     onShowUsernamePromptChanged: {
         if (!showUsernamePrompt) {
@@ -79,7 +79,7 @@ Item {
         //but more importantly it works round a Qt bug that can trigger if the app is closed with a TextField focused
         //DAVE REPORT THE FRICKING THING AND PUT A LINK
         loginButton.forceActiveFocus();
-        loginRequest(username, password);
+        loginRequest(username, password, sessionButton.currentIndex);
     }
 
     // Gets the system time to determinate the correct greeting
