@@ -1,0 +1,17 @@
+[kdeglobals][KDE]
+widgetStyle=kvantum
+
+[kdeglobals][General]
+ColorScheme=Andromeda
+
+[kcminputrc][Mouse]
+cursorTheme=breeze_cursors
+
+[plasmarc][Theme]
+name=Andromeda
+
+[kwinrc][org.kde.kdecoration2]
+library=org.kde.kwin.aurorae
+theme=__aurorae__svg__Andromeda
+
+
