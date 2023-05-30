@@ -28,6 +28,8 @@ import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 
 import "components"
+import "components/animation"
+
 
 PlasmaCore.ColorScope {
     id: root
@@ -59,6 +61,11 @@ PlasmaCore.ColorScope {
         asynchronous: true
         cache: true
         clip: true
+    }
+
+    RejectPasswordAnimation {
+        id: rejectPasswordAnimation
+        target: mainStack
     }
 
     MouseArea {
@@ -443,6 +450,7 @@ PlasmaCore.ColorScope {
         target: sddm
         onLoginFailed: {
             notificationMessage = i18nd("plasma_lookandfeel_org.kde.lookandfeel", "Login Failed")
+            rejectPasswordAnimation.start()
         }
         onLoginSucceeded: {
             //note SDDM will kill the greeter at some random point after this
