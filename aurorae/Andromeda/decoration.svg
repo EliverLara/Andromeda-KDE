@@ -34,17 +34,17 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1005"
+     inkscape:window-width="1547"
+     inkscape:window-height="756"
      id="namedview56"
      showgrid="false"
-     inkscape:zoom="31.770495"
-     inkscape:cx="58.29308"
-     inkscape:cy="74.739157"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg3642"
+     inkscape:zoom="3.9713119"
+     inkscape:cx="43.184722"
+     inkscape:cy="73.401437"
+     inkscape:window-x="50"
+     inkscape:window-y="118"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="decoration-bottomright"
      inkscape:showpageshadow="2"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1" />
@@ -138,7 +138,7 @@
        xlink:href="#linearGradient4215-49" />
   </defs>
   <rect
-     style="opacity:1;fill:#23262e;fill-opacity:1;stroke:none"
+     style="opacity:1;fill:#1a1d23;fill-opacity:1;stroke:none"
      id="decoration-center"
      class="ColorScheme-Background"
      width="50"
@@ -153,7 +153,7 @@
        style="opacity:1;fill:url(#radialGradient4263);fill-opacity:1;stroke:none"
        inkscape:connector-curvature="0" />
     <path
-       style="color:#383c4a;opacity:1;fill:#23262e;fill-opacity:1;stroke:none"
+       style="color:#383c4a;opacity:1;fill:#1a1d23;fill-opacity:1;stroke:none"
        id="path87"
        class="ColorScheme-Background"
        d="m 17.000005,74.000025 v -7 h -7 v 2 c 0,2.77 2.23,5 5,5 z"
@@ -187,7 +187,7 @@
          style="fill:#3498db;fill-opacity:0" />
     </g>
     <path
-       style="color:#383c4a;opacity:1;fill:#23262e;fill-opacity:1;stroke:none"
+       style="color:#383c4a;opacity:1;fill:#1a1d23;fill-opacity:1;stroke:none"
        id="path71"
        class="ColorScheme-Background"
        d="m 10.000015,16.999925 v 50 l 7,10e-6 v -50 z"
@@ -221,7 +221,7 @@
          style="fill:#3498db;fill-opacity:0" />
     </g>
     <path
-       style="color:#383c4a;opacity:1;fill:#23262e;fill-opacity:1;stroke:none"
+       style="color:#383c4a;opacity:1;fill:#1a1d23;fill-opacity:1;stroke:none"
        id="path79"
        class="ColorScheme-Background"
        d="m 73.999995,16.999935 v 50 l -7,1e-5 v -50 z"
@@ -255,7 +255,7 @@
          style="fill:#3498db;fill-opacity:0" />
     </g>
     <path
-       style="color:#383c4a;opacity:1;fill:#23262e;fill-opacity:1;stroke:none"
+       style="color:#383c4a;opacity:1;fill:#1a1d23;fill-opacity:1;stroke:none"
        id="path95"
        class="ColorScheme-Background"
        d="m 16.999975,74.000065 h 50.00002 v -7 h -50.00001 z"
@@ -274,7 +274,7 @@
        style="opacity:1;fill:url(#radialGradient3382);fill-opacity:1;stroke:none"
        inkscape:connector-curvature="0" />
     <path
-       style="color:#383c4a;opacity:1;fill:#23262e;fill-opacity:1;stroke:none"
+       style="color:#383c4a;opacity:1;fill:#1a1d23;fill-opacity:1;stroke:none"
        id="path103"
        class="ColorScheme-Background"
        d="m 66.999995,74.000025 v -7 h 7 v 2 c 0,2.77 -2.23,5 -5,5 z"
@@ -308,7 +308,7 @@
          style="fill:#3498db;fill-opacity:0" />
     </g>
     <path
-       style="color:#383c4a;opacity:1;fill:#23262e;fill-opacity:1;stroke:none"
+       style="color:#383c4a;opacity:1;fill:#1a1d23;fill-opacity:1;stroke:none"
        id="path111"
        class="ColorScheme-Background"
        d="m 16.999975,9.999935 h 50.00002 v 7 h -50.00001 z"
@@ -327,7 +327,7 @@
        style="opacity:1;fill:url(#radialGradient4255);fill-opacity:1;stroke:none"
        inkscape:connector-curvature="0" />
     <path
-       style="color:#383c4a;opacity:1;fill:#23262e;fill-opacity:1;stroke:none"
+       style="color:#383c4a;opacity:1;fill:#1a1d23;fill-opacity:1;stroke:none"
        id="path119"
        class="ColorScheme-Background"
        d="m 66.999995,9.999935 v 7 h 7 v -2 c 0,-2.77 -2.23,-5 -5,-5 z"
@@ -347,7 +347,7 @@
        inkscape:connector-curvature="0" />
     <path
        id="path63"
-       style="color:#383c4a;opacity:1;fill:#23262e;fill-opacity:1;stroke:none"
+       style="color:#383c4a;opacity:1;fill:#1a1d23;fill-opacity:1;stroke:none"
        class="ColorScheme-Background"
        d="M 15 10 C 12.230003 10 10 12.230003 10 15 L 10 17 L 17 17 L 17 10 L 15 10 z " />
     <path
