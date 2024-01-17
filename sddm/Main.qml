@@ -115,8 +115,8 @@ PlasmaCore.ColorScope {
         Clock {
             id: clock
             visible: true
-            x: parent.width - width - 10
-            y: parent.height - height - 10
+            x: parent.width - width - 30
+            y: parent.height - height - 30
         }
 
 
