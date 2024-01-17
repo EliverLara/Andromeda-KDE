@@ -162,7 +162,7 @@ Item {
             // Greeting Label
             Label {
                 id: greetingLabel
-                text: hours < 12 ? "Good Morning" : hours < 18 ? "Good afternoon" : "Good evening"
+                text: hours < 12 ? "Good Morning," : hours < 18 ? "Good Afternoon," : "Good Evening,"
                 color: "#fff"
                 style: softwareRendering ? Text.Outline : Text.Normal
                 styleColor: softwareRendering ? ColorScope.backgroundColor : "transparent" //no outline, doesn't matter
@@ -209,6 +209,7 @@ Item {
                 
                 Layout.fillWidth: true
                 Layout.topMargin: 20
+                Layout.rightMargin: 30
 
                 Input {
                     id: passwordBox
@@ -325,7 +326,7 @@ Item {
             
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        //anchors.bottomMargin: height / 2
+        anchors.bottomMargin: height / 2
     }
 
 }
